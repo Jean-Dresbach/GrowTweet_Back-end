@@ -12,3 +12,109 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String @id @default(uuid()) @db.Uuid
+  name     String @db.VarChar(100)
+  username String @unique @db.VarChar(100)
+  email    String @unique @db.VarChar(150)
+  password String @db.VarChar(100)
+
+  token String?
+
+  createdAt DateTime @default(now()) @map("crated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  Followed Follower[] @relation("followed")
+  Follower Follower[] @relation("follower")
+  Tweet    Tweet[]
+  Like     Like[]
+  ReTweet  ReTweet[]
+
+  @@map("users")
+}
+
+model Follower {
+  id String @id @default(uuid()) @db.Uuid
+
+  followedId String @map("followed_id") @db.Uuid
+  followed   User   @relation(name: "followed", fields: [followedId], references: [id])
+
+  followerId String @map("follower_id") @db.Uuid
+  follower   User   @relation(name: "follower", fields: [followerId], references: [id])
+
+  createdAt DateTime @default(now()) @map("crated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("followers")
+}
+
+enum TweetType {
+  Tweet
+  Reply
+}
+
+model Tweet {
+  id      String    @id @default(uuid()) @db.Uuid
+  content String    @db.VarChar(500)
+  type    TweetType @default(Tweet)
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("crated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  Like           Like[]
+  ReplyId        Reply[]   @relation("tweet_id")
+  RepliedTweetId Reply[]   @relation("replied_tweet")
+  ReTweet        ReTweet[]
+
+  @@map("tweets")
+}
+
+model Like {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  tweetId String @map("tweet_id") @db.Uuid
+  tweet   Tweet  @relation(fields: [tweetId], references: [id])
+
+  createdAt DateTime @default(now()) @map("crated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("likes")
+}
+
+model Reply {
+  id String @id @default(uuid()) @db.Uuid
+
+  tweetId String @map("tweet_id") @db.Uuid
+  tweet   Tweet  @relation(name: "tweet_id", fields: [tweetId], references: [id])
+
+  repliedTweetId String @map("replied_tweet_id") @db.Uuid
+  repliedTweet   Tweet  @relation(name: "replied_tweet", fields: [repliedTweetId], references: [id])
+
+  createdAt DateTime @default(now()) @map("crated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("replies")
+}
+
+model ReTweet {
+  id      String  @id @default(uuid()) @db.Uuid
+  content String? @db.VarChar(500)
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  reTweetedId String @map("re_tweeted_id") @db.Uuid
+  reTweeted   Tweet  @relation(fields: [reTweetedId], references: [id])
+
+  createdAt DateTime @default(now()) @map("crated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("re_tweets")
+}

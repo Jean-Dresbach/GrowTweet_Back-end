@@ -26,7 +26,7 @@ export async function validateUserCreate(
   }
 }
 
-export async function validateGetUser(
+export async function validateUserId(
   request: Request,
   response: Response,
   next: NextFunction

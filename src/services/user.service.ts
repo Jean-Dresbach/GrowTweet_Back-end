@@ -97,7 +97,10 @@ export class UserService {
     })
 
     if (!user) {
-      throw new Error("Usuário não encontrado.")
+      return {
+        code: 404,
+        message: "Usuário não encontrado."
+      }
     }
 
     const updatedUser = await repository.user.update({
@@ -120,7 +123,7 @@ export class UserService {
 
     return {
       code: 200,
-      message: "Aluno atualizado com sucesso.",
+      message: "Usuário atualizado com sucesso.",
       data: updatedUser
     }
   }
@@ -133,7 +136,10 @@ export class UserService {
     })
 
     if (!user) {
-      throw new Error("Usuário não encontrado.")
+      return {
+        code: 404,
+        message: "Usuário não encontrado."
+      }
     }
 
     const deletedUser = await repository.user.delete({
@@ -150,7 +156,7 @@ export class UserService {
 
     return {
       code: 200,
-      message: "Aluno removido com sucesso.",
+      message: "Usuário removido com sucesso.",
       data: deletedUser
     }
   }

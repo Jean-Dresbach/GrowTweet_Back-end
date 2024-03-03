@@ -17,31 +17,34 @@ export async function validateUserCreate(
       })
     }
 
-    const existingUser = await repository.user.findFirst({
-      where: {
-        OR: [{ email: email }, { username: username }]
-      }
-    })
-
-    if (existingUser) {
-      if (existingUser.email === email) {
-        return response.status(409).json({
-          code: 409,
-          message: "Email já cadastrado."
-        })
-      } else {
-        return response.status(409).json({
-          code: 409,
-          message: "Username já cadastrado."
-        })
-      }
-    }
-
     next()
   } catch (error) {
     return response.status(500).json({
       code: 500,
       message: "Erro."
+    })
+  }
+}
+
+export async function validateGetUser(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = request.params
+
+    if (id.length < 12 || id.length > 12)
+      return response.status(400).json({
+        code: 400,
+        message: "Id inválido."
+      })
+
+    next()
+  } catch (error: any) {
+    return response.status(500).json({
+      code: 500,
+      message: `Erro: ${error.message}`
     })
   }
 }

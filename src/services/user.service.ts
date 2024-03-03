@@ -22,6 +22,26 @@ export class UserService {
   }
 
   public async create(userDTO: CreateUserDTO): Promise<ResponseDTO> {
+    const existingUser = await repository.user.findFirst({
+      where: {
+        OR: [{ email: userDTO.email }, { username: userDTO.username }]
+      }
+    })
+
+    if (existingUser) {
+      if (existingUser.email === userDTO.email) {
+        return {
+          code: 409,
+          message: "Email já cadastrado."
+        }
+      } else {
+        return {
+          code: 409,
+          message: "Username já cadastrado."
+        }
+      }
+    }
+
     const createdStudent = await repository.user.create({
       data: {
         name: userDTO.name,
@@ -56,7 +76,10 @@ export class UserService {
     })
 
     if (!user) {
-      throw new Error("Usuário não encontrado,")
+      return {
+        code: 404,
+        message: "Usuário não encontrado."
+      }
     }
 
     return {

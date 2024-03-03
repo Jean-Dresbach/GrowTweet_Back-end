@@ -31,8 +31,8 @@ export async function validateUserId(
 ) {
   try {
     const { id } = request.params
-
-    if (id.length < 12 || id.length > 12)
+    ;("b730eb79-59a8-4004-b7ea-ae8788f3896b")
+    if (id.length < 36 || id.length > 36)
       return response.status(400).json({
         code: 400,
         message: "Id inválido."

@@ -5,23 +5,26 @@ import { ResponseDTO } from "../dtos/response.dto"
 
 export class AuthService {
   public async login(email: string, password: string): Promise<ResponseDTO> {
-    const student = await repository.user.findFirst({
+    const user = await repository.user.findFirst({
       where: {
         email,
         password
       }
     })
 
-    if (!student) {
-      throw new Error("Credenciais inválidas")
+    if (!user) {
+      return {
+        code: 400,
+        message: "Credenciais inválidas."
+      }
     }
 
     const token = randomUUID()
-    const userId = student.id
+    const userId = user.id
 
     await repository.user.update({
       where: {
-        id: student.id
+        id: user.id
       },
       data: {
         token

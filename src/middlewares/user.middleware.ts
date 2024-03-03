@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express"
 
-import { repository } from "../database/prisma.connection"
-
 export async function validateUserCreate(
   request: Request,
   response: Response,

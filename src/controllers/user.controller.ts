@@ -23,13 +23,6 @@ export class UserController {
     try {
       const { name, email, username, password } = request.body
 
-      if (!name || !email || !username || !password) {
-        return response.status(400).json({
-          code: 400,
-          message: "Preencha todos os campos obrigatórios."
-        })
-      }
-
       const user: CreateUserDTO = { name, email, username, password }
 
       const result = await userService.create(user)

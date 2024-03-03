@@ -1,6 +1,7 @@
 import express from "express"
 
 import { UserController } from "../controllers/user.controller"
+import { validateUserCreate } from "../middlewares/user.middleware"
 
 const router = express.Router()
 
@@ -8,7 +9,7 @@ const userController = new UserController()
 
 router.get("/users", userController.index)
 
-router.post("/users", userController.store)
+router.post("/users", validateUserCreate, userController.store)
 
 router.get("/users/:id", userController.show)
 

@@ -15,8 +15,8 @@ export async function validateId(
   next: NextFunction
 ) {
   try {
-    const { id, userId, tweetId } = request.params
-    const idsToCheck = [id, userId, tweetId]
+    const { userId, tweetId, likeId } = request.params
+    const idsToCheck = [likeId, userId, tweetId]
 
     if (checkIdsLength(idsToCheck, 36)) {
       return response.status(400).json({

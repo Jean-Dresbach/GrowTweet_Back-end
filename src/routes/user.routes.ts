@@ -1,10 +1,8 @@
 import express from "express"
 
 import { UserController } from "../controllers/user.controller"
-import {
-  validateUserCreate,
-  validateUserId
-} from "../middlewares/user.middleware"
+import { validateUserCreate } from "../middlewares/user.middleware"
+import { validateId } from "../middlewares/validateId.middleware"
 
 const router = express.Router()
 
@@ -14,10 +12,10 @@ router.get("/users", userController.index)
 
 router.post("/users", validateUserCreate, userController.store)
 
-router.get("/users/:id", validateUserId, userController.show)
+router.get("/users/:userId", validateId, userController.show)
 
-router.put("/users/:id", validateUserId, userController.update)
+router.put("/users/:userId", validateId, userController.update)
 
-router.delete("/users/:id", validateUserId, userController.delete)
+router.delete("/users/:userId", validateId, userController.delete)
 
 export default router

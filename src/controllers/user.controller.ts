@@ -38,9 +38,9 @@ export class UserController {
 
   public async show(request: Request, response: Response) {
     try {
-      const { id } = request.params
+      const { userId } = request.params
 
-      const result = await userService.findById(id)
+      const result = await userService.findById(userId)
 
       return response.status(result.code).json(result)
     } catch (error: any) {
@@ -53,11 +53,11 @@ export class UserController {
 
   public async update(request: Request, response: Response) {
     try {
-      const { id } = request.params
+      const { userId } = request.params
       const { name, email, username, password } = request.body
 
       const result = await userService.update({
-        id,
+        id: userId,
         name,
         email,
         username,
@@ -68,16 +68,16 @@ export class UserController {
     } catch (error: any) {
       return response.status(500).json({
         code: 500,
-        message: `Erro ao buscar usuário: ${error.message}`
+        message: `Erro ao atualizar usuário: ${error.message}`
       })
     }
   }
 
   public async delete(request: Request, response: Response) {
     try {
-      const { id } = request.params
+      const { userId } = request.params
 
-      const result = await userService.delete(id)
+      const result = await userService.delete(userId)
 
       response.status(result.code).json(result)
     } catch (error: any) {

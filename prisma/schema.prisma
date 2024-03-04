@@ -25,8 +25,8 @@ model User {
   createdAt DateTime @default(now()) @map("crated_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  Followed Follower[] @relation("followed")
-  Follower Follower[] @relation("follower")
+  Followed Follow[]  @relation("followed")
+  Follower Follow[]  @relation("follower")
   Tweet    Tweet[]
   Like     Like[]
   ReTweet  ReTweet[]
@@ -34,7 +34,7 @@ model User {
   @@map("users")
 }
 
-model Follower {
+model Follow {
   id String @id @default(uuid()) @db.Uuid
 
   followedId String @map("followed_id") @db.Uuid
@@ -46,7 +46,7 @@ model Follower {
   createdAt DateTime @default(now()) @map("crated_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("followers")
+  @@map("follows")
 }
 
 enum TweetType {

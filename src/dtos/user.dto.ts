@@ -6,7 +6,7 @@ export interface CreateUserDTO {
 }
 
 export interface UpdateUserDTO {
-  id: string
+  userId: string
   name?: string
   email?: string
   username?: string

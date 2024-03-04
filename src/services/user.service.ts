@@ -92,7 +92,7 @@ export class UserService {
   public async update(userDTO: UpdateUserDTO): Promise<ResponseDTO> {
     const user = await repository.user.findUnique({
       where: {
-        id: userDTO.id
+        id: userDTO.userId
       }
     })
 
@@ -105,7 +105,7 @@ export class UserService {
 
     const updatedUser = await repository.user.update({
       where: {
-        id: userDTO.id
+        id: userDTO.userId
       },
       data: {
         name: userDTO.name,

@@ -57,7 +57,7 @@ export class UserController {
       const { name, email, username, password } = request.body
 
       const result = await userService.update({
-        id: userId,
+        userId,
         name,
         email,
         username,

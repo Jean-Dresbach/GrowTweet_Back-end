@@ -28,7 +28,14 @@ export async function validateLoginToken(
       where: { id: userId }
     })
 
-    if (!user || user.token !== authorization) {
+    if (!user) {
+      return response.status(404).json({
+        code: 404,
+        message: "Usuário não encontrado."
+      })
+    }
+
+    if (user.token !== authorization) {
       return response.status(401).json({
         code: 401,
         message: "Token de autenticação inválido."

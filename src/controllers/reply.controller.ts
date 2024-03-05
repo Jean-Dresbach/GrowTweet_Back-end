@@ -90,10 +90,12 @@ export class ReplyController {
       const result = await replyService.update({ replyId, content })
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao atualizar reply: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -105,10 +107,12 @@ export class ReplyController {
       const result = await replyService.delete(replyId)
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao excluir reply: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }

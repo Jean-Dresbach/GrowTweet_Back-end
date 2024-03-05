@@ -15,8 +15,16 @@ export async function validateId(
   next: NextFunction
 ) {
   try {
-    const { userId, tweetId, likeId, followerId, replyId } = request.params
-    const idsToCheck = [likeId, userId, tweetId, followerId, replyId]
+    const { userId, tweetId, likeId, followerId, followedId, replyId } =
+      request.params
+    const idsToCheck = [
+      likeId,
+      userId,
+      tweetId,
+      followerId,
+      followedId,
+      replyId
+    ]
 
     if (checkIdsLength(idsToCheck, 36)) {
       return response.status(400).json({
@@ -26,10 +34,12 @@ export async function validateId(
     }
 
     next()
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error)
+
     return response.status(500).json({
       code: 500,
-      message: `Erro: ${error.message}`
+      message: `Erro interno do servidor.`
     })
   }
 }

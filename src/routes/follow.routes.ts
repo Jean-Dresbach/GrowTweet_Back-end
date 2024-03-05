@@ -10,21 +10,21 @@ const router = express.Router()
 const followController = new FollowController()
 
 router.get(
-  "/follow/:userId",
+  "/follows/:userId",
   validateId,
   validateLoginToken,
   followController.index
 )
 
 router.get(
-  "/follow/user/:userId",
+  "/follows/user/:userId/:followedId?",
   validateId,
   validateLoginToken,
   followController.indexById
 )
 
 router.post(
-  "/follow/:userId",
+  "/follows/:userId",
   validateId,
   validateLoginToken,
   validateFollowCreate,
@@ -32,14 +32,14 @@ router.post(
 )
 
 router.get(
-  "/follow/:userId/:followId",
+  "/follows/:userId/:followId",
   validateId,
   validateLoginToken,
   followController.show
 )
 
 router.delete(
-  "/follow/:userId/:followId",
+  "/follows/:userId/:followId",
   validateId,
   validateLoginToken,
   followController.delete

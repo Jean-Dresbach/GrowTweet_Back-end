@@ -40,6 +40,17 @@ export class FollowService {
   }
 
   public async create(followDTO: CreateFollowDTO): Promise<ResponseDTO> {
+    const checkFollowedId = await repository.user.findUnique({
+      where: { id: followDTO.followedId }
+    })
+
+    if (!checkFollowedId) {
+      return {
+        code: 404,
+        message: "Usuário a ser seguido não encontrado!"
+      }
+    }
+
     const createdFollow = await repository.follow.create({
       data: {
         followedId: followDTO.followedId,

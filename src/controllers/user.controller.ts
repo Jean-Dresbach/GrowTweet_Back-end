@@ -11,10 +11,12 @@ export class UserController {
       const users = await userService.findAll()
 
       return response.status(users.code).json(users)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao listar usuários: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -28,10 +30,12 @@ export class UserController {
       const result = await userService.create(user)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao criar usuário: ${error.message}.`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -43,10 +47,12 @@ export class UserController {
       const result = await userService.findById(userId)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao buscar usuário: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -65,10 +71,12 @@ export class UserController {
       })
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao atualizar usuário: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -80,10 +88,12 @@ export class UserController {
       const result = await userService.delete(userId)
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao excluir usuário: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }

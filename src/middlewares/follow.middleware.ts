@@ -6,12 +6,20 @@ export async function validateFollowCreate(
   next: NextFunction
 ) {
   try {
+    const { userId } = request.params
     const { followedId } = request.body
 
-    if (!followedId) {
+    if (!userId || !followedId) {
       return response.status(400).json({
         code: 400,
         message: "Preencha todos os campos obrigatórios."
+      })
+    }
+
+    if (userId === followedId) {
+      return response.status(400).json({
+        code: 400,
+        message: "FollowedId inválido."
       })
     }
 
@@ -23,10 +31,12 @@ export async function validateFollowCreate(
     }
 
     next()
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error)
+
     return response.status(500).json({
       code: 500,
-      message: `Erro: ${error.message}`
+      message: `Erro interno do servidor.`
     })
   }
 }

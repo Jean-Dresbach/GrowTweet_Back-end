@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 
 import { AuthService } from "../services/auth.service"
+import { errorMonitor } from "events"
 
 const authService = new AuthService()
 
@@ -19,10 +20,12 @@ export class AuthController {
       const result = await authService.login(emailOrUsername, password)
 
       return response.status(200).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
-        code: response.statusCode,
-        message: `Erro ao fazer login: ${error.message}`
+        code: 500,
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -34,10 +37,12 @@ export class AuthController {
       const result = await authService.logout(userId)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
-        code: response.statusCode,
-        message: `Erro ao fazer login: ${error.message}`
+        code: 500,
+        message: `Erro interno do servidor.`
       })
     }
   }

@@ -41,6 +41,33 @@ export class TweetService {
     }
   }
 
+  public async findFeed(id: string): Promise<ResponseDTO> {
+    const feed = await repository.tweet.findMany({
+      where: {
+        OR: [
+          { userId: id },
+          { user: { Followed: { some: { followerId: id } } } }
+        ]
+      },
+      select: {
+        id: true,
+        content: true,
+        type: true,
+        userId: true,
+        createdAt: true
+      },
+      orderBy: {
+        createdAt: "desc"
+      }
+    })
+
+    return {
+      code: 200,
+      message: "Feed listado com sucesso.",
+      data: { feed }
+    }
+  }
+
   public async create(tweetDTO: CreateTweetDTO): Promise<ResponseDTO> {
     const createdTweet = await repository.tweet.create({
       data: {

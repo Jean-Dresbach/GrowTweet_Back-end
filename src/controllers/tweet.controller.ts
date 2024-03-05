@@ -42,7 +42,7 @@ export class TweetController {
     try {
       const { userId } = request.params
 
-      const result = await tweetService.findAllById(userId)
+      const result = await tweetService.findFeed(userId)
 
       return response.status(result.code).json(result)
     } catch (error) {

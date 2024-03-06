@@ -43,10 +43,12 @@ export async function validateLoginToken(
     }
 
     next()
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error)
+
     return response.status(500).json({
       code: 500,
-      message: `Erro: ${error.message}`
+      message: `Erro interno do servidor.`
     })
   }
 }

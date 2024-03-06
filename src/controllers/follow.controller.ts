@@ -21,9 +21,10 @@ export class FollowController {
 
   public async indexById(request: Request, response: Response) {
     try {
-      const { userId } = request.params
+      const { userId, followedId } = request.params
+      const idToFind = followedId || userId
 
-      const result = await followService.findAllById(userId)
+      const result = await followService.findAllById(idToFind)
 
       return response.status(result.code).json(result)
     } catch (error: any) {
@@ -44,40 +45,46 @@ export class FollowController {
       const result = await followService.create(follow)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao criar follow: ${error.message}.`
+        message: `Erro interno do servidor.`
       })
     }
   }
 
   public async show(request: Request, response: Response) {
     try {
-      const { likeId } = request.params
+      const { followId } = request.params
 
-      const result = await followService.findById(likeId)
+      const result = await followService.findById(followId)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao buscar like: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
 
   public async delete(request: Request, response: Response) {
     try {
-      const { likeId } = request.params
+      const { followId } = request.params
 
-      const result = await followService.delete(likeId)
+      const result = await followService.delete(followId)
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao excluir like: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }

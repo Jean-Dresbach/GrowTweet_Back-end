@@ -23,6 +23,13 @@ router.get(
   tweetController.indexById
 )
 
+router.get(
+  "/tweets/feed/:userId",
+  validateId,
+  validateLoginToken,
+  tweetController.showFeed
+)
+
 router.post(
   "/tweets/:userId",
   validateId,

@@ -10,7 +10,6 @@ export class ReplyService {
       select: {
         id: true,
         tweetId: true,
-        repliedTweetId: true,
         tweet: { select: { content: true } }
       }
     })
@@ -30,7 +29,6 @@ export class ReplyService {
       select: {
         id: true,
         tweetId: true,
-        repliedTweetId: true,
         tweet: { select: { content: true } }
       }
     })
@@ -50,7 +48,6 @@ export class ReplyService {
       select: {
         id: true,
         tweetId: true,
-        repliedTweetId: true,
         tweet: { select: { content: true } }
       }
     })
@@ -149,7 +146,6 @@ export class ReplyService {
       select: {
         id: true,
         userId: true,
-        RepliedTweetId: true,
         content: true
       }
     })
@@ -174,11 +170,10 @@ export class ReplyService {
     }
 
     const deletedReply = await repository.tweet.delete({
-      where: { id },
+      where: { id: reply.tweetId },
       select: {
         id: true,
         userId: true,
-        RepliedTweetId: true,
         content: true
       }
     })

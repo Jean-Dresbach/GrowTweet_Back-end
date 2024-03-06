@@ -11,10 +11,12 @@ export class TweetController {
       const result = await tweetService.findAll()
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao listar tweets: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -26,10 +28,29 @@ export class TweetController {
       const result = await tweetService.findAllById(userId)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao listar tweets de um usuário: ${error.message}`
+        message: `Erro interno do servidor.`
+      })
+    }
+  }
+
+  public async showFeed(request: Request, response: Response) {
+    try {
+      const { userId } = request.params
+
+      const result = await tweetService.findFeed(userId)
+
+      return response.status(result.code).json(result)
+    } catch (error) {
+      console.log(error)
+
+      return response.status(500).json({
+        code: 500,
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -44,10 +65,12 @@ export class TweetController {
       const result = await tweetService.create(tweet)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao criar tweet: ${error.message}.`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -59,10 +82,12 @@ export class TweetController {
       const result = await tweetService.findById(tweetId)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao buscar tweet: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -75,10 +100,12 @@ export class TweetController {
       const result = await tweetService.update({ id: tweetId, content })
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao atualizar tweet: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -90,10 +117,12 @@ export class TweetController {
       const result = await tweetService.delete(tweetId)
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao excluir tweet: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }

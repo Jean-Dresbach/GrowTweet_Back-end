@@ -26,10 +26,12 @@ export class LikeController {
       const result = await likeService.findAllById(userId)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao listar likes de um usuário: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -44,10 +46,12 @@ export class LikeController {
       const result = await likeService.create(like)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao criar like: ${error.message}.`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -59,10 +63,12 @@ export class LikeController {
       const result = await likeService.findById(likeId)
 
       return response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao buscar like: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }
@@ -74,10 +80,12 @@ export class LikeController {
       const result = await likeService.delete(likeId)
 
       response.status(result.code).json(result)
-    } catch (error: any) {
+    } catch (error) {
+      console.log(error)
+
       return response.status(500).json({
         code: 500,
-        message: `Erro ao excluir like: ${error.message}`
+        message: `Erro interno do servidor.`
       })
     }
   }

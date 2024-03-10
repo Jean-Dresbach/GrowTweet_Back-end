@@ -1,7 +1,6 @@
 import { Request, Response } from "express"
 
 import { AuthService } from "../services/auth.service"
-import { errorMonitor } from "events"
 
 const authService = new AuthService()
 

@@ -41,7 +41,7 @@ export class TweetService {
     }
   }
 
-  public async findFeed(id: string): Promise<ResponseDTO> {
+  public async findFeed(id: string): Promise<ResponseDTO> {    
     const feed = await repository.tweet.findMany({
       where: {
         OR: [

@@ -15,7 +15,13 @@ export async function validateUserCreate(
       })
     }
 
+    request.body.name = name.trim()
+    request.body.email = email.trim()
+    request.body.username = username.trim()
+    request.body.password = password.trim()
+
     next()
+
   } catch (error) {
     console.log(error)
 

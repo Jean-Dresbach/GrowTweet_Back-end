@@ -32,12 +32,14 @@ export class UserService {
       if (existingUser.email === userDTO.email) {
         return {
           code: 409,
-          message: "E-mail já cadastrado."
+          message: "E-mail já cadastrado.",
+          field: "email"
         }
       } else {
         return {
           code: 409,
-          message: "Nome de usuário já cadastrado."
+          message: "Nome de usuário já cadastrado.",
+          field: "username"
         }
       }
     }

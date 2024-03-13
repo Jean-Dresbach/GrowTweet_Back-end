@@ -7,7 +7,11 @@ const authService = new AuthService()
 export class AuthController {
   public async login(request: Request, response: Response) {
     try {
-      const { emailOrUsername, password } = request.body
+      const emailOrUsername = request.body.emailOrUsername.trim()
+      const password = request.body.password.trim()
+
+      request.body.emailOrUsername = emailOrUsername
+      request.body.password = password
 
       if (!emailOrUsername || !password) {
         return response.status(400).json({
@@ -18,7 +22,7 @@ export class AuthController {
 
       const result = await authService.login(emailOrUsername, password)
 
-      return response.status(200).json(result)
+      return response.status(result.code).json(result)
     } catch (error) {
       console.log(error)
 
